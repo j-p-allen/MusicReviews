@@ -8,7 +8,7 @@ const cloudinary = require('cloudinary')
 
 const app = express()
 const router = express.Router()
-const url = process.env.MONGODB_URI || "mongodb://localhost:27017/MusicReviews"
+const url = process.env.MONGODB_URI || "mongodb://admin:bigboikeith@musicreviewcluster-shard-00-00-iql8d.mongodb.net:27017,musicreviewcluster-shard-00-01-iql8d.mongodb.net:27017,musicreviewcluster-shard-00-02-iql8d.mongodb.net:27017/MusicReviews?ssl=true&replicaSet=MusicReviewCluster-shard-0&authSource=admin&retryWrites=true"
 
 /** configure cloudinary */
 cloudinary.config({
