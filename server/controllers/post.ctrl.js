@@ -64,9 +64,11 @@ module.exports = {
      */
     commentPost: (req, res, next) => {
         Post.findById(req.body.post_id).then((post)=> {
+            console.log(req.body)
             return post.comment({
                 author: req.body.author_id,
-                text: req.body.comment
+                comment: req.body.comment,
+                votes: 0
             }).then(() => {
                 return res.json({msg: "Done"})
             })

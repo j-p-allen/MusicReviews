@@ -13,9 +13,17 @@ let PostSchema = new mongoose.Schema(
             ref: 'User'
         },
         comments: [{
-             type: mongoose.Schema.Types.ObjectId,
-             ref: 'Comment'
-        }]
+          author: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'User'
+          },
+          comment: String,
+          votes: Number,
+          votingUsers: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+          }]
+      }]
     }
 );
 PostSchema.methods.clap = function() {
