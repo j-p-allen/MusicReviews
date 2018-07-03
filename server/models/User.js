@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt-nodejs');
 
 let UserSchema = new mongoose.Schema(
     {
-        name: String,
+        username: String,
         email: String,
-        provider: String,
-        provider_id: String,
-        token: String,
-        provider_pic: String,
+        password: String,
+        image: Buffer,
         followers: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -22,6 +21,17 @@ let UserSchema = new mongoose.Schema(
         ]
     }
 )
+
+// generating a hash
+UserSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// checking if password is valid
+UserSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.local.password);
+};
+
 UserSchema.methods.follow = function (user_id) {
     if (this.following.indexOf(user_id) === -1) {
         this.following.push(user_id)        

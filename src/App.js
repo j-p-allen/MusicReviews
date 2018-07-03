@@ -5,7 +5,7 @@ import './App.css';
 import Index from './pages/Index'
 import LoginPage from './pages/LoginPage'
 import Post from './pages/Post'
-import RegisterPage from './pages/RegisterPage'
+import Register from './pages/Register'
 
 class App extends Component {
 
@@ -16,7 +16,7 @@ class App extends Component {
           <Route exact path="/" component={Index} />
           <Route path="/post/:id" component={Post} />
           <Route path="/login" component={LoginPage} />
-          <Route path="/register" component={RegisterPage} />
+          <Route path="/register" component={Register} />
         </div>
       </Router>
     );

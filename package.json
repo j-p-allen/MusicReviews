@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bcrypt-nodejs": "latest",
     "cloudinary": "latest",
     "cors": "latest",
     "connect-multiparty": "latest",
