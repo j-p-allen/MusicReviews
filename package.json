@@ -8,6 +8,7 @@
     "connect-multiparty": "latest",
     "helmet": "latest",
     "mongoose": "latest",
+    "passport-local": "latest",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "latest",

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import LoginNav from '../components/LoginNav'
 import PostCard from '../components/PostCard'
+import React, { Component } from 'react';
 
 class Index extends Component {
   state = {
@@ -25,6 +26,7 @@ class Index extends Component {
     console.log(this.state);
     return (
       <div className="App">
+        <LoginNav />
         {this.state.postsList.map(card => (
           <PostCard data={card}/>
         ))}
