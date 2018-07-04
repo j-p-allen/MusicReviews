@@ -32,6 +32,12 @@ UserSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
+UserSchema.methods.saveUser = function () {
+    this.password = this.generateHash(this.password);
+    console.log(this);
+    return this.save()
+}
+
 UserSchema.methods.follow = function (user_id) {
     if (this.following.indexOf(user_id) === -1) {
         this.following.push(user_id)        

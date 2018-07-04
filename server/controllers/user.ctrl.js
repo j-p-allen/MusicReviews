@@ -4,19 +4,17 @@ const cloudinary = require('cloudinary')
 
 module.exports = {
     registerUser: (req, res, next) => {
-        console.log(req.body);
         let {username, email, password} = req.body
-        saveUser({ username, email, password });
-
-        function saveUser(obj) {
-          new User(obj).save((err, user) => {
+        new User({username, email, password}).save((err, user) => {
             if (err)
-              res.send(err)
+                res.send(err)
+            else if (!user)
+                res.send(400)
             else {
-              return res.send(user)
+                return user.saveUser().then((_user) => {
+                    return res.send(_user)
+                })
             }
-            next()
-          })
-        }
+        })
     }
 }
