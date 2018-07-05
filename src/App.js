@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
 import Index from './pages/Index'
-import LoginPage from './pages/LoginPage'
+import Login from './pages/Login'
 import Post from './pages/Post'
 import Register from './pages/Register'
 
@@ -15,7 +15,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={Index} />
           <Route path="/post/:id" component={Post} />
-          <Route path="/login" component={LoginPage} />
+          <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
         </div>
       </Router>

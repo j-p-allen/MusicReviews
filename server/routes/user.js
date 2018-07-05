@@ -7,4 +7,8 @@ module.exports = (router) => {
     router
         .route('/user/register')
         .post(userController.registerUser)
+
+    router
+        .route('/user/login')
+        .post(userController.loginUser)
 }
