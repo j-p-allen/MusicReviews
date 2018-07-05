@@ -6,33 +6,18 @@ const cloudinary = require('cloudinary')
 module.exports = {
     addPost: (req, res, next) => {
         let {title, description, claps} = req.body
-        if (req.files.image) {
-            cloudinary.uploader.upload(req.files.image.path, (result) => {
-                let obj = { title, claps, description, feature_img: result.url != null ? result.url : '' }
-                savePost(obj)
-            },{
-                resource_type: 'image',
-                eager: [
-                    {effect: 'sepia'}
-                ]
-            })
-        }else {
-            savePost({ title, description, claps, feature_img: '' })
-        }
-        function savePost(obj) {
-            new Post(obj).save((err, post) => {
-                if (err)
-                    res.send(err)
-                else if (!post)
-                    res.send(400)
-                else {
-                    return post.addAuthor(req.body.author_id).then((_post) => {
-                        return res.send(_post)
-                    })
-                }
-                next()
-            })
-        }
+        new Post({ title, description, claps, feature_img: '' }).save((err, post) => {
+            if (err)
+                res.send(err)
+            else if (!post)
+                res.send(400)
+            else {
+                return post.addAuthor(req.body.author_id).then((_post) => {
+                    return res.send(_post)
+                })
+            }
+            next()
+        })
     },
     getAll: (req, res, next) => {
         Post.find(req.params.id)

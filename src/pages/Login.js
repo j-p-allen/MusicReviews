@@ -33,6 +33,7 @@ class Login extends Component {
         res.json().then(function(data) {
           if (data.loggedIn) {
             window.sessionStorage.setItem("loggedIn", 1);
+            window.sessionStorage.setItem("userId", data.userId);
           }
         })
       }

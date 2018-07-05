@@ -4,16 +4,23 @@ import React, { Component } from 'react';
 
 class Index extends Component {
   state = {
-    postsList: []
+    postsList: [],
+    loggedIn: 0
   };
 
   componentDidMount() {
-    this.callApi()
-      //.then(res => this.setState({ postsList: res.express }))
+
+    this.setLoginState();
+
+    this.getPosts()
       .catch(err => console.log(err));
   }
 
-  callApi = async () => {
+  setLoginState() {
+    this.state.loggedIn = window.sessionStorage.getItem("loggedIn");
+  }
+
+  getPosts = async () => {
     const response = await fetch('http://localhost:5000/api/posts');
     const body = await response.json();
 
@@ -26,7 +33,7 @@ class Index extends Component {
     console.log(this.state);
     return (
       <div className="App">
-        <LoginNav />
+        <LoginNav data={this.state.loggedIn} />
         {this.state.postsList.map(card => (
           <PostCard data={card}/>
         ))}

@@ -1,26 +1,47 @@
+import CommentCard from '../components/CommentCard'
 import React, { Component } from 'react';
 import mongoose from 'mongoose';
 
 class Post extends Component {
   state = {
-    currentPost: {},
-    comment: ''
+    currentPost: {
+      comments: []
+    },
+    comment: '',
+    loggedIn: 0,
+    userId: ''
   };
 
   componentDidMount() {
-    const url_split = window.location.href.split('/')
-    const post_id = url_split[url_split.length - 1];
-    this.callApi(post_id)
+    this.setLoginState();
+
+    this.getPost(this.getPostId())
       .catch(err => console.log(err));
   }
 
-  callApi = async (post_id) => {
+  setLoginState() {
+    this.state.loggedIn = window.sessionStorage.getItem("loggedIn");
+
+    if (window.sessionStorage.getItem("loggedIn")) {
+      this.state.userId = window.sessionStorage.getItem("userId");
+    }
+  }
+
+  getPostId() {
+    const url_split = window.location.href.split('/')
+    const post_id = url_split[url_split.length - 1];
+    return post_id;
+  }
+
+  getPost = async (post_id) => {
     const response = await fetch('/api/post/' + post_id);
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);
 
     this.setState({currentPost: body})
+
+    console.log(body);
   };
 
   onChange(event) {
@@ -36,8 +57,7 @@ class Post extends Component {
       },
       body: JSON.stringify({
         post_id: this.state.currentPost._id,
-        // hard-coding this for now since we don't have auth.
-        author_id: "41224d776a326fb40f000001",
+        author_id: this.state.userId,
         comment: this.state.comment
       })
     })
@@ -59,6 +79,11 @@ class Post extends Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
+        <div class="comments">
+          {this.state.currentPost.comments.map(comment => (
+            <CommentCard data={comment} />
+          ))}
+        </div>
       </div>
     );
   }
